@@ -1,0 +1,13 @@
+# scala
+target
+*.class
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea
+out
+
+# macos
+.DS_Store
