@@ -22,7 +22,17 @@ object Main {
   /**
    * Exercise 2
    */
-    def balance(chars: List[Char]): Boolean = false
+    def balance(chars: List[Char]): Boolean = balanceHelper(chars, List[Char]())
+
+    def balanceHelper(chars: List[Char], stack: List[Char]): Boolean = {
+      if (chars.isEmpty) stack.isEmpty
+      else if (chars.head == '(') balanceHelper(chars.tail, stack :+ chars.head)
+      else if (chars.head == ')') {
+        if (stack.isEmpty) false
+        else balanceHelper(chars.tail, stack.init)
+      } 
+      else balanceHelper(chars.tail, stack)
+    }
   
   /**
    * Exercise 3
