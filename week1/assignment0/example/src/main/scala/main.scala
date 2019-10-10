@@ -6,4 +6,5 @@ object Main extends App {
 	println(Lists.max(List(1,2,3)))
 	println(Lists.max(List(3,2,1)))
 	println(Lists.max(List(3)))
+	// println(Lists.max(List()))
 }
