@@ -57,8 +57,8 @@ object MainModule {
 
     println("-- Running Main --")
 
-    println(format("Fibonacci", 7, fibonacci))
-    println(isSorted(Array(1, 2, 3, 4, 5), (a: Int, b: Int) => a >= b))
+    // println(format("Fibonacci", 7, fibonacci))
+    // println(isSorted(Array(1, 2, 3, 4, 5), (a: Int, b: Int) => a >= b))
 
     val myList = MyList(1, 2, 3, 4, 5)
     val result = myList match {
@@ -128,7 +128,19 @@ object MainModule {
     // println(addTwoListsTest)
 
     val zipWithTest = MyList.zipWith(MyList(1, 2, 3), MyList(4, 5, 6))(_+_)
-    println(zipWithTest)
+    // println(zipWithTest)
+
+    // val listsAreEqualTest = MyList.listsAreEqual(MyList(1, 2, 3), MyList(3, 2, 1))
+    // println(listsAreEqualTest)
+
+    val takeTest = MyList.take(MyList(1, 2, 3, 4, 5), 2)
+    // println(takeTest)
+
+    val takeWindowTest = MyList.takeWindow(MyList(1, 2, 3, 4, 5), 0, 2)
+    // println(takeWindowTest)
+
+    val hasSubsequenceTest = MyList.hasSubsequence(MyList(1, 2, 3, 4), MyList(2, 3, 4))
+    println(hasSubsequenceTest)
   }
 
 }
@@ -167,3 +179,42 @@ object MainModule {
 //   def printS = println(s)
 
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

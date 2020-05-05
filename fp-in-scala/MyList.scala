@@ -7,26 +7,26 @@ case class MyCons[+A](head: A, tail: MyList[A]) extends MyList[A] // data constr
 
 object MyList {
 
-	def sum(ints: MyList[Int]): Int = ints match {
-		case MyNil => 0
-		case MyCons(x, xs) => x + sum(xs)
-	}
+  def sum(ints: MyList[Int]): Int = ints match {
+    case MyNil => 0
+    case MyCons(x, xs) => x + sum(xs)
+  }
 
-	def product(doubles: MyList[Double]): Double = doubles match {
-		case MyNil => 1.0
-		case MyCons(x, xs) => x * product(xs)
-	}
+  def product(doubles: MyList[Double]): Double = doubles match {
+    case MyNil => 1.0
+    case MyCons(x, xs) => x * product(xs)
+  }
 
-	def apply[A](as: A*): MyList[A] = 
-		if (as.isEmpty) MyNil
-		else MyCons(as.head, apply(as.tail: _*))
+  def apply[A](as: A*): MyList[A] = 
+    if (as.isEmpty) MyNil
+    else MyCons(as.head, apply(as.tail: _*))
 
-	def tail[A](l: MyList[A]): MyList[A] = l match {
-		case MyNil => sys.error("tail of empty MyList")
-		case MyCons(_, xs) => xs
-	}
+  def tail[A](l: MyList[A]): MyList[A] = l match {
+    case MyNil => sys.error("tail of empty MyList")
+    case MyCons(_, xs) => xs
+  }
 
-	def setHead[A](l: MyList[A], h: A): MyList[A] = l match {
+  def setHead[A](l: MyList[A], h: A): MyList[A] = l match {
     case MyNil => sys.error("setHead of empty MyList")
     case MyCons(_, xs) => MyCons(h, xs)
   }
@@ -127,5 +127,104 @@ object MyList {
     case (_, MyNil) => MyNil
     case (MyCons(x, xs), MyCons(y, ys)) => MyCons(f(x, y), zipWith(xs, ys)(f))
   }
-  
+
+  def listsAreEqual[A](as: MyList[A], bs: MyList[A]): Boolean = {
+    val e = zipWith(as, bs)((a, b) => a == b)
+    foldLeft(e, true)((a, b) => a && b)
+  }
+
+  def take[A](as: MyList[A], i: Int): MyList[A] = (as, i) match {
+    case (MyNil, _) => MyNil // i > as.length
+    case (_, 0) => MyNil // we've taken up to i
+    case (MyCons(x, xs), _) => MyCons(x, take(xs, i-1))
+  }
+
+  def takeWindow[A](as: MyList[A], i: Int, j: Int): MyList[A] = drop(take(as, j), i)
+
+  def hasSubsequence[A](sup: MyList[A], sub: MyList[A]): Boolean = {
+    val l = length(sup) - length(sub)
+
+    def loop(i: Int, j: Int, res: Boolean): Boolean = (j, res) match {
+      case (k, _) if (k == length(sup)) => res
+      case (_, true) => res
+      case _ => {
+        val window = takeWindow(sup, i, j)
+        val newRes = listsAreEqual(window, sub)
+        loop(i+1, j+1, newRes)
+      }
+    }
+
+    loop(0, l, false)
+
+    // 1. create function that determines if 2 lists are equal
+    // 1.5. create function that creates a sub array
+    //      cut first i elements, cut back j elements
+    // 2. manually slide len sub accross sup
+    // 3. if any window matches, return true
+    // 4. return false
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
